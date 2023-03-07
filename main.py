@@ -24,16 +24,9 @@ def get_max_soyjaks(session):
 
 
 def get_last_soyjak_downloaded():
-    # since we formatted the soyjaks with a number,
-    # we can just get the highest number
-    soyjak_list = [file for file in Path("soyjaks").glob("*") if file.is_file()]
-    max_number = 0
-    for soyjak in soyjak_list:
-        dissected_filename = soyjak.stem.split('soyjak_')
-        soyjak_number = dissected_filename[1]
-        if int(soyjak_number) > max_number:
-            max_number = int(soyjak_number)
-    return max_number
+    # get the highest number from the downloaded soyjak filenames
+    soyjak_list = [file.stem.split('soyjak_')[1] for file in Path("soyjaks").glob("*") if file.is_file()]
+    return max([int(soyjak_number) for soyjak_number in soyjak_list], default=0)
 
 
 def get_soyjak_image_url(page):
